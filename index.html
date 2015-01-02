@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>nwispy by jlant-usgs</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>nwispy</h1>
+          <h2>nwispy is a repository for code that reads, processes, plots, and allows query capability for USGS NWIS data files.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/jlant-usgs/nwispy/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/jlant-usgs/nwispy/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/jlant-usgs/nwispy" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="nwispy" class="anchor" href="#nwispy" aria-hidden="true"><span class="octicon octicon-link"></span></a>nwispy</h1>
+
+<h2>
+<a id="contents" class="anchor" href="#contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents</h2>
+
+<p><a href="#version">Version</a></p>
+
+<p><a href="#author">Author</a></p>
+
+<p><a href="#description">Description</a></p>
+
+<p><a href="#nwispy-command-line-interface"><em>nwispy</em> Command Line Interface</a></p>
+
+<p><a href="#nwispy-simple-uml-diagram"><em>nwispy</em> Simple UML Diagram</a></p>
+
+<p><a href="#sample-images">Sample Images</a></p>
+
+<p><a href="#general-instructions">General Instructions</a></p>
+
+<p><a href="#testing">Testing</a></p>
+
+<p><a href="#code-documentation">Code Documentation</a></p>
+
+<p><a href="#requirements">Requirements</a></p>
+
+<p><a href="#installation-instructions">Installation Instructions</a></p>
+
+<p><a href="#repository-layout">Repository Layout</a></p>
+
+<p><a href="#in-the-works">In the Works</a></p>
+
+<p><a href="#disclaimer-and-notice">Disclaimer and Notice</a></p>
+
+<h2>
+<a id="version" class="anchor" href="#version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Version</h2>
+
+<p>1.0.0</p>
+
+<h2>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<pre><code>Jeremiah Lant
+Hydrologist 
+U.S. Geological Survey
+Kentucky Water Science Center
+Louisville, Kentucky 40299
+(502) 493-1949
+jlant@ugs.gov
+</code></pre>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p><em>nwispy</em> is a command line tool for analysing U.S. Geological Survey (USGS) water resource data 
+collected nationwide on rivers and streams by USGS gages and instruments. The National Water
+Information System (NWIS) is the Nation's principal repository of water resources data.  Most NWIS
+data can be accessed directly at:</p>
+
+<p><a href="http://waterdata.usgs.gov/nwis/">http://waterdata.usgs.gov/nwis/</a></p>
+
+<p>and for real-time data for surface water, ground water, or water-quality data:</p>
+
+<p><a href="http://waterdata.usgs.gov/nwis/rt">http://waterdata.usgs.gov/nwis/rt</a></p>
+
+<p>Some sample highlights include:</p>
+
+<ul>
+<li>Processes USGS NWIS data files</li>
+<li>Generates and saves plots of all parameters found in USGS NWIS data files</li>
+<li>Retrieves and processes NWIS data files using USGS web services</li>
+<li>Logs erroneous data found in NWIS data files </li>
+<li>Unix friendly</li>
+</ul>
+
+<p><em>nwispy</em> can read, process, plot, and print data and information from NWIS daily, instantaneous (real-time), 
+and/or site data files. The NWIS data files can come from any USGS site nationwide and can contain any
+number of parameters (discharge, gage height, temperature, precipitation, sediment concentration, 
+turbidity, depth to water level, etc.).  Time-series plots are automatically created and saved for all 
+parameters displaying relevant statistics (mean, maximum, and minimum) with detailed axes and title descriptions.<br>
+For sample images, please see <a href="#sample-images">Sample Images</a>.</p>
+
+<p><em>nwispy</em> has web service capability to automatically retrieve and process NWIS data files based on a tab-delimited
+user request file. Details of the USGS web services can be accessed at:</p>
+
+<p><a href="http://waterservices.usgs.gov">http://waterservices.usgs.gov</a></p>
+
+<p>Please see <a href="#general-instructions">General Instructions</a> for details on <em>nwispy</em>'s web service capability.</p>
+
+<p><em>nwispy</em> automatically tracks, notifies user about, and creates a log file called <em>warn.log</em> that specifies for
+the user missing or erroneous data values contained in NWIS data file(s).  The <em>warn.log</em> file is only created if
+missing or erroneous data values are found.  In addition, if a web service error or any other application wide 
+error occurs, a file called <em>exception.log</em> is created containing the details of the error.  To help solve the error
+the <em>exception.log</em> can be emailed to the author.  Please see <a href="#general-instructions">General Instructions</a> for details on error logging. </p>
+
+<p><em>nwispy</em> is written in Python and has been built to be a "Unix friendly" tool, meaning it can be placed anywhere 
+along a Unix pipeline. <em>nwispy</em> has a help menu that lists the current command line arguments/options that can be 
+passed to <em>nwispy</em>. At this time, users can run <em>nwispy</em> using a shell with the appropriate flags to process NWIS 
+files either stored locally on a user's machine or <em>nwispy</em> can retrieve and process files from the web based on 
+a user request file.  Please see <a href="#general-instructions">General Instructions</a> for details on how to use nwispy. </p>
+
+<p>For full code documentation and tutorial on how to use <em>nwispy</em>, please see <a href="#code-documentation">Code Documentation</a> or
+use the following link:</p>
+
+<p><a href="http://ky.water.usgs.gov/usgs/projects/jlant_program_code/nwispy/html/index.html">http://ky.water.usgs.gov/usgs/projects/jlant_program_code/nwispy/html/index.html</a></p>
+
+<p>For upcoming developments, please see <a href="#in-the-works">In the Works</a>.</p>
+
+<p>Return to <a href="#contents">Contents</a>.</p>
+
+<h2>
+<a id="nwispy-command-line-interface" class="anchor" href="#nwispy-command-line-interface" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<em>nwispy</em> Command Line Interface</h2>
+
+<p><img src="docs/_static/nwispy-interface.png" alt="nwispy interface"></p>
+
+<h2>
+<a id="nwispy-simple-uml-diagram" class="anchor" href="#nwispy-simple-uml-diagram" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<em>nwispy</em> Simple UML Diagram</h2>
+
+<p><img src="docs/_static/nwispy-uml-diagram.png" alt="nwispy uml"></p>
+
+<h2>
+<a id="sample-images" class="anchor" href="#sample-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample Images</h2>
+
+<p><img src="docs/_static/discharge.png" alt="discharge plot">
+<img src="docs/_static/gage-height.png" alt="gage height plot">
+<img src="docs/_static/temperature.png" alt="temperature plot">
+<img src="docs/_static/turbidity.png" alt="turbidity plot">
+<img src="docs/_static/depth-to-water.png" alt="depth plot"></p>
+
+<p>Return to <a href="#contents">Contents</a>.</p>
+
+<h2>
+<a id="general-instructions" class="anchor" href="#general-instructions" aria-hidden="true"><span class="octicon octicon-link"></span></a>General Instructions</h2>
+
+<p>To use <em>nwispy</em>, users will use a shell to execute <em>nwispy</em> with the appropriate flags to process files 
+stored on the user's machine. To be implemented soon is a web service to NWIS. Please see <em>IN THE WORKS</em><em>.
+Plots are automatically generated and saved to an directory named *output-filename</em>.  An error log called
+<em>error.log</em> that logs any errors found in the data file, such as missing data values, is automatically 
+generated and saved to the same directory that the plots are saved in.</p>
+
+<p><strong>Help -h flag</strong></p>
+
+<p>The -h flag spawns a help menu with all the flag options.</p>
+
+<p><strong>File(s) -f flag</strong></p>
+
+<p>The -f flag specifies a file or files to process.</p>
+
+<p>To process a single NWIS data file the general syntax is:</p>
+
+<pre><code>$ python nwispy.py -f path/to/file
+</code></pre>
+
+<p>The above commands will create an output directory with the following contents:</p>
+
+<pre><code>output-filename/
+                *.png       # plots of each parameter in the data file
+                ...
+                *.png
+</code></pre>
+
+<p>If the data file processed contains any missing or erroneous data values, then a file
+called <em>warn.log</em> is created and placed in the output-filename directory for the user
+to review.  The <em>warn.log</em> file specifies what issues were found in the file. </p>
+
+<p>For example, using data contained in this repository's data directory:</p>
+
+<pre><code>$ python nwispy.py -f ../data/datafiles/03290500_dv.txt
+</code></pre>
+
+<p>will produce the following output directory: </p>
+
+<pre><code>output-03290500_dv/
+                USGS 03290500 - Discharge, cubic feet per second (MEAN).png     
+</code></pre>
+
+<p>and</p>
+
+<pre><code>$ python nwispy.py -f ../data/datafiles/03287500_dv.txt
+</code></pre>
+
+<p>will produce the following output directory: </p>
+
+<pre><code>output-03287500_uv/
+                USGS 03287500 - Discharge, cubic feet per second (MEAN).png 
+                USGS 03287500 - Gage height, feet.png   
+                USGS 03287500 - Precipitation, total, inches.png
+                USGS 03287500 - Temperature, water, degrees Celsius.png
+                warn.log
+</code></pre>
+
+<p>To process a multiple NWIS data files the general command syntax is:</p>
+
+<pre><code>$ python nwispy.py -f file1 file2 file3
+</code></pre>
+
+<p><strong>File Dialog -fd flag</strong></p>
+
+<p>The -fd flag opens a file dialog box for users to choose files: </p>
+
+<pre><code>$ python nwispy.py -fd
+</code></pre>
+
+<p>The above command syntax will create an output directory in the same manner as the -f flag.</p>
+
+<p><strong>Plot -p flag</strong></p>
+
+<p>The -p flag shows plots to the screen for the user to analyse and query. </p>
+
+<pre><code>$ python nwispy.py -fd -p
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>$ python nwispy.py -f file.txt -p
+</code></pre>
+
+<p>The above command syntax will create an output directory in the same manner as the -f flag.</p>
+
+<p><strong>Verbose -v flag</strong></p>
+
+<p>The -v flag prints data file information, such as the type of parameters found, to the screen for the user. </p>
+
+<pre><code>$ python nwispy.py -f file.txt -v
+</code></pre>
+
+<p>The above command syntax will create an output directory in the same manner as the -f flag.</p>
+
+<p><strong>Unix Friendly</strong></p>
+
+<p>Users can place <em>nwispy</em> along a Unix pipeline.  For example, <em>nwispy</em> can accept standard input.</p>
+
+<pre><code>$ cat file.txt | nwispy.py 
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>$ cat file.txt | nwispy.py -p -v 
+</code></pre>
+
+<p><strong>Web Service -web flag</strong></p>
+
+<p>The -web flag retrieves data files through the USGS NWIS web services based upon a user created tab-delimited <em>requests.txt</em> file.  </p>
+
+<pre><code>$ python nwispy.py -web path/to/requests-file.txt 
+</code></pre>
+
+<p><strong>Web Service File Dialog -webfd flag</strong></p>
+
+<p>The -webfd flag opens a file dialog box for users to choose a tab-delimited <em>requests.txt</em> file retrieves data files through USGS NWIS
+web services.  </p>
+
+<pre><code>$ python nwispy.py -web path/to/requests-file.txt   
+</code></pre>
+
+<p>The above commands will create an output directory called <em>requests-file-datafiles</em> which will contain timestamped downloaded
+NWIS data file(s) and an output directory for each downloaded file containing the plots of each parameter requested and a 
+<em>warn.log</em> if erroneous data values are found.</p>
+
+<p>Example tab-delimited <em>requests.txt</em> files are shown below:</p>
+
+<p><em>request_single_gage.txt</em></p>
+
+<p><img src="docs/_static/request_single_gage.png" alt="request file plot"></p>
+
+<p><em>request_multiple_gages.txt</em></p>
+
+<p><img src="docs/_static/request_multiple_gages.png" alt="request file plot"></p>
+
+<p>Return to <a href="#contents">Contents</a>.</p>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>Unit tests for <em>nwispy</em> were written using the nose library (<a href="https://nose.readthedocs.org/en/latest/">https://nose.readthedocs.org/en/latest/</a>), and 
+are contained in the <em>tests</em> directory.  <em>nwispy</em> can be unit tested by typing the <strong>nosetests</strong> command at 
+the <em>nwispy</em> project level directory (one directory above the <em>tests</em> directory):</p>
+
+<pre><code>$ pwd
+/your-path/nwispy   
+
+$ nosetests
+</code></pre>
+
+<h2>
+<a id="code-documentation" class="anchor" href="#code-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Documentation</h2>
+
+<p>Please visit the following web page for code documentation and tutorial on how to use <em>nwispy</em>:</p>
+
+<p><a href="http://ky.water.usgs.gov/usgs/projects/jlant_program_code/nwispy/html/index.html">http://ky.water.usgs.gov/usgs/projects/jlant_program_code/nwispy/html/index.html</a></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<pre><code>python == 2.7.6
+numpy == 1.8.0
+matplotlib == 1.3.1
+nose == 1.3.0
+</code></pre>
+
+<h2>
+<a id="installation-instructions" class="anchor" href="#installation-instructions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation Instructions</h2>
+
+<p>Instructions coming soon.</p>
+
+<p>Return to <a href="#contents">Contents</a>.</p>
+
+<h2>
+<a id="repository-layout" class="anchor" href="#repository-layout" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository Layout</h2>
+
+<pre><code>bin/                        # directory containing executables
+data/                       # directory containing sample data files to use with software and associated information
+    datafiles/              # directory containing sample data to use with software
+        ...
+    webservice-requests/    # directory containing sample web service request files
+        ...
+    README.txt              # file describing sample data in datafiles/
+docs/                       # directory containing code documentation
+    ...
+    html/                   # html code documentation
+    ...
+images/                     # directory with sample images and screenshots
+    ...
+nwispy/                     # directory containing code modules
+    nwispy.py               # main controller
+    nwispy_views.py         # module that handles views; plotting and printing
+    nwispy_filereader.py    # module that handles file reading and processing
+    nwispy_helpers.py       # module that contains helper functions
+    nwispy_webservice.py    # module that contains web service capabilities
+    ...
+tests/                      # directory containing unit tests using nose library (https://nose.readthedocs.org/en/latest/)
+    ...
+Makefile                    # makefile to help clean directories
+    LICENSE.txt             # USGS Software User Rights Notice
+README.md                   # README file
+REQUIREMENTS.txt            # list of requirements/dependencies 
+setup.py                    # code for building, distributing, and installing modules
+</code></pre>
+
+<p>Return to <a href="#contents">Contents</a>.</p>
+
+<h2>
+<a id="in-the-works" class="anchor" href="#in-the-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>In the Works</h2>
+
+<ul>
+<li>Improvement to the <em>nwispygui.py</em> code to allow users to interact with plots using a 
+<em>SpanSelector</em> mouse widget. A key press of 'A' or 'a' would active the slider and a key press of 
+'Q' or 'q' de-activates the slider.</li>
+</ul>
+
+<h2>
+<a id="disclaimer-and-notice" class="anchor" href="#disclaimer-and-notice" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disclaimer and Notice</h2>
+
+<pre><code>Please refer to the USGS Software User Rights Notice (LICENSE.txt or http://water.usgs.gov/software/help/notice/)
+for complete use, copyright, and distribution information. The USGS provides no warranty, expressed or implied, as to the
+correctness of the furnished software or the suitability for any purpose. The software has been tested, but as with any
+complex software, there could be undetected errors. Users who find errors are requested to report them to the USGS.
+
+References to non-USGS products, trade names, and (or) services are provided for information purposes only and do not
+constitute endorsement or warranty, express or implied, by the USGS, U.S. Department of Interior, or U.S. Government, as to
+their suitability, content, usefulness, functioning, completeness, or accuracy.
+
+Although this program has been used by the USGS, no warranty, expressed or implied, is made by the USGS or the United
+States Government as to the accuracy and functioning of the program and related program material nor shall the fact of
+distribution constitute any such warranty, and no responsibility is assumed by the USGS in connection therewith.
+</code></pre>
+
+<p>Return to <a href="#contents">Contents</a>.</p>
+        </section>
+
+        <footer>
+          nwispy is maintained by <a href="https://github.com/jlant-usgs">jlant-usgs</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
